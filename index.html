@@ -105,33 +105,20 @@
     }
 
     .controls {
-      padding: 22px;
+      padding: 16px 18px;
       display: grid;
-      gap: 18px;
+      gap: 14px;
     }
 
     .control-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.75fr) minmax(220px, 0.85fr);
-      gap: 16px;
+      grid-template-columns: 1fr;
+      gap: 12px;
     }
 
     .field-group {
       display: grid;
       gap: 8px;
-    }
-
-    .compact-note {
-      display: grid;
-      align-content: center;
-      min-height: 100%;
-      padding: 14px 16px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.72);
-      border: 1px solid rgba(255, 255, 255, 0.74);
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.45;
     }
 
     label {
@@ -264,7 +251,7 @@
     .content {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 16px;
     }
 
     .panel {
@@ -307,8 +294,8 @@
 
     .details-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
-      gap: 20px;
+      grid-template-columns: 1fr;
+      gap: 16px;
     }
 
     .accordion-stack {
@@ -566,6 +553,10 @@
       overflow-wrap: anywhere;
     }
 
+    .app-hidden {
+      display: none !important;
+    }
+
     @media (max-width: 1120px) {
       .control-grid,
       .details-grid {
@@ -573,8 +564,8 @@
       }
 
       #map {
-        min-height: 560px;
-        height: 72svh;
+        min-height: 640px;
+        height: 78svh;
       }
     }
 
@@ -589,10 +580,6 @@
       .panel,
       .controls {
         padding: 16px;
-      }
-
-      .controls {
-        gap: 14px;
       }
 
       h1 {
@@ -633,8 +620,8 @@
       }
 
       #map {
-        min-height: 620px;
-        height: 78svh;
+        min-height: 720px;
+        height: 86svh;
       }
     }
 
@@ -684,26 +671,18 @@
       }
 
       #map {
-        min-height: 560px;
-        height: 76svh;
+        min-height: 660px;
+        height: 84svh;
       }
     }
   </style>
 </head>
 <body>
   <div class="shell">
-    <section class="hero">
-      <div class="eyebrow">Upload. Read. Plot.</div>
-      <h1>Document Coordinates Map</h1>
-      <p>
-        Upload a document, extract the coordinates, draw the polygon, read QR details, and export the result to Excel.
-      </p>
-    </section>
-
     <section class="controls hero">
       <div class="control-grid">
         <div class="field-group">
-          <label for="fileInput">Upload a source file</label>
+          <label for="fileInput">Upload LPM in pdf format For better results</label>
           <input
             id="fileInput"
             type="file"
@@ -712,10 +691,6 @@
           <div class="hint">
             Supported: image, PDF, DOCX, XLSX, XLS, TXT, CSV, and JSON. For older `.doc` files, convert them to PDF or DOCX first.
           </div>
-        </div>
-
-        <div class="compact-note">
-          Map built in. Excel export included.
         </div>
       </div>
 
@@ -726,36 +701,13 @@
         <button id="clearButton" class="secondary">Clear</button>
       </div>
 
-      <div class="stats">
-        <div class="stat">
-          <small>Points</small>
-          <strong id="pointsCount">0</strong>
-        </div>
-        <div class="stat">
-          <small>QR Codes</small>
-          <strong id="qrCount">0</strong>
-        </div>
-        <div class="stat">
-          <small>Source Type</small>
-          <strong id="sourceType">Waiting</strong>
-        </div>
-        <div class="stat">
-          <small>QR URLs</small>
-          <strong id="urlCount">0</strong>
-        </div>
-        <div class="stat">
-          <small>Status</small>
-          <strong id="summaryStatus">Idle</strong>
-        </div>
-      </div>
     </section>
 
     <section class="content">
       <div class="panel map-panel">
         <div class="panel-head">
           <div>
-            <h2>Polygon Map</h2>
-            <div class="panel-note">Built-in hybrid-style satellite map with labels, numbered points, and polygon fill.</div>
+            <h2>LPM Locator on Ground</h2>
           </div>
           <span class="source-chip" id="sourceChip">No file yet</span>
         </div>
@@ -808,48 +760,19 @@
             <div class="empty">No QR code detected yet.</div>
           </div>
         </div>
-
-        <div class="panel">
-          <div class="panel-head">
-            <div>
-              <h2>More Details</h2>
-              <div class="panel-note">Open only what you need on mobile.</div>
-            </div>
-          </div>
-
-          <div class="accordion-stack">
-            <details class="fold-panel">
-              <summary>Extracted Text</summary>
-              <div class="fold-body">
-                <div class="panel-note" style="margin-bottom: 12px;">Edit this text if OCR needs correction, then click Plot Coordinates.</div>
-                <textarea id="extractedText" placeholder="The document text and OCR result will appear here."></textarea>
-              </div>
-            </details>
-
-            <details class="fold-panel">
-              <summary>Progress</summary>
-              <div class="fold-body">
-                <div class="status-box" id="statusBox">
-                  <div class="status-line">Waiting for a file.</div>
-                </div>
-              </div>
-            </details>
-
-            <div>
-              <div class="panel-head">
-                <div>
-                  <h2>Linked URL Details</h2>
-                  <div class="panel-note">If QR data contains a website URL, the tool tries to load that page and show the details below automatically.</div>
-                </div>
-              </div>
-              <div id="urlDetails" class="qr-list">
-                <div class="empty">No URL found in QR data yet.</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
+  </div>
+
+  <div class="app-hidden" aria-hidden="true">
+    <strong id="pointsCount">0</strong>
+    <strong id="qrCount">0</strong>
+    <strong id="sourceType">Waiting</strong>
+    <strong id="urlCount">0</strong>
+    <strong id="summaryStatus">Idle</strong>
+    <textarea id="extractedText"></textarea>
+    <div id="statusBox"><div class="status-line">Waiting for a file.</div></div>
+    <div id="urlDetails"><div class="empty">No URL found in QR data yet.</div></div>
   </div>
 
   <script
